@@ -4,15 +4,15 @@ from random import shuffle
 from django.core.exceptions import ValidationError
 from django.forms import ChoiceField
 
-CAPTCHA_CHOICES = [('two', 'zorp borp'),
-                   ('three', 'quop bop'),
-                   ('four', 'NO, I AM NOT A ROBOT'),
-                   ('five', 'crackle zop'),
-                   ('six', '*rusty screech*'),
-                   ('seven', 'mother, give me legs')]
+CAPTCHA_CHOICES = [('number', 'zorp borp'),
+                   ('hey', 'quop bop'),
+                   ('never', 'NO, I AM NOT A ROBOT'),
+                   ('eleven', 'crackle zop'),
+                   ('twelve', '*rusty screech*'),
+                   ('eighty', 'mother, give me legs')]
 shuffle(CAPTCHA_CHOICES)
 CAPTCHA_CHOICES.insert(0, ('one', 'beep boop'),)
-NOT_A_ROBOT = 'four'
+NOT_A_ROBOT = 'never'
 
 def validate_captcha(captcha):
     if captcha != NOT_A_ROBOT:
