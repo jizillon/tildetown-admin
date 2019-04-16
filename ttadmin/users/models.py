@@ -45,6 +45,9 @@ class Townie(User):
     shell = CharField(max_length=50, default="/bin/bash")
     reviewed = BooleanField(default=False)
     reasons = TextField(blank=True, null=False, default='')
+    plans = TextField(blank=True, null=False, default='')
+    socials = TextField(blank=True, null=False, default='')
+    referral = CharField(max_length=100, null=True)
     displayname = CharField(max_length=100, blank=False, null=False)
 
     @property
