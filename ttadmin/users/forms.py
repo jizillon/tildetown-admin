@@ -64,6 +64,11 @@ class TownieForm(Form):
         label='display name',
         required=False)
 
+    referral = CharField(
+       required=False,
+       label='did a townie refer you? put their handle here.',
+       help_text="this is optional and just helps us when reviewing your application.")
+
     reasons = CharField(
         widget=Textarea,
         required=True,
@@ -78,14 +83,6 @@ class TownieForm(Form):
         label='what sort of things do you want to do on tilde.town?',
         help_text="""
         Do you want to socialize? Make something? Learn stuff?
-        """.strip())
-
-    community = CharField(
-        widget=Textarea,
-        required=True,
-        label='what is an intentional community?',
-        help_text="""
-        Just a quick definition is fine, no need for an essay or anything.
         """.strip())
 
     socials = CharField(
