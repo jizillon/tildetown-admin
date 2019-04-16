@@ -21,13 +21,14 @@
     <body>
         <h1>tilde.town guestbook</h1>
         <marquee>~*~*~*~*say hello*~*~*~*~</marquee>
-        <form class="tilde" action="{% url 'guestbook:guestbook' %}" method="post">
+        <!-- <form class="tilde" action="{% url 'guestbook:guestbook' %}" method="post">
             {% csrf_token %}
             <table>
                 {{form.as_table}}
             </table>
             <input type="submit" value="sign" >
         </form>
+        -->
 
         {% for m in messages %}
         <p>
