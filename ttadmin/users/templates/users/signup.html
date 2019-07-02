@@ -11,6 +11,7 @@
 
          {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
+         {% if signups_enabled %}
          <form class="tilde" action="{% url 'users:signup' %}" method="post">
              {% csrf_token %}
              <table id="signup">
@@ -40,5 +41,11 @@
                  <input type="submit" value="sign up <3" />
              </div>
          </form>
+         {% else %}
+         <p>
+         Town signups are currently disabled, but will resume in the future. If you can't wait for an account, you
+         can check out some <a href="https://tildeverse.org/">similar servers</a>.
+         </p>
+         {% endif %}
     </body>
 </html>

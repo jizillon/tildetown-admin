@@ -15,6 +15,7 @@ from .models import Townie, Pubkey
 class SignupView(FormView):
     form_class = TownieForm
     template_name = 'users/signup.html'
+    extra_context = {"signups_enabled": False}
 
     @transaction.atomic
     def form_valid(self, form):
