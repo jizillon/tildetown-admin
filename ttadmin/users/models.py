@@ -10,7 +10,7 @@ from django.contrib.auth.models import User
 from django.db.models import TextField, BooleanField, CharField, ForeignKey
 from django.template.loader import get_template
 
-from common.mailing import send_email, ADMIN_NAME
+from common.mailing import send_email
 from help.models import Ticket
 
 logger = logging.getLogger()
@@ -58,7 +58,7 @@ class Townie(User):
         welcome_tmpl = get_template('users/welcome_email.txt')
         context = {
             'username': self.username,
-            'admin_name': ADMIN_NAME,
+            'admin_name': 'vilmibm',
         }
         text = welcome_tmpl.render(context)
         success = send_email(self.email, text, subject='tilde.town!')
