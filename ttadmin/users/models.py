@@ -47,7 +47,7 @@ class Townie(User):
     reasons = TextField(blank=True, null=False, default='')
     plans = TextField(blank=True, null=False, default='')
     socials = TextField(blank=True, null=False, default='')
-    referral = CharField(max_length=100, null=True)
+    referral = CharField(max_length=100, null=True, blank=True)
     displayname = CharField(max_length=100, blank=False, null=False)
 
     @property
