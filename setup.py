@@ -18,7 +18,6 @@ setup(
     install_requires = ['Django==1.10.2',
                         'sshpubkeys==2.2.0',
                         'psycopg2==2.7.6.1',
-                        'requests==2.12.5',
                         'gunicorn==19.6.0',
                         'Mastodon.py==1.1.1',
                         'tweepy==3.5.0'],
