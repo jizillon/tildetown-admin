@@ -10,7 +10,7 @@ _Being an adminstrative tool written in Django for <https://tilde.town>_.
  * [x] Helpdesk
  * [x] User account management
  * [ ] Start/stop services
- * [ ] Cost reporting from AWS
+ * [ ] Cost reporting from DO
  * [ ] Status monitoring
  
 ## Requirements
