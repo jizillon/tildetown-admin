@@ -19,7 +19,7 @@ setup(
                         'sshpubkeys==2.2.0',
                         'psycopg2==2.7.6.1',
                         'gunicorn==19.6.0',
-                        'Mastodon.py==1.1.1',
-                        'tweepy==3.5.0'],
+                        'Mastodon.py==1.4.5',
+                        'tweepy==3.7.0'],
     include_package_data = True,
 )
