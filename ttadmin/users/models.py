@@ -49,6 +49,7 @@ class Townie(User):
     socials = TextField(blank=True, null=False, default='')
     referral = CharField(max_length=100, null=True, blank=True)
     displayname = CharField(max_length=100, blank=False, null=False)
+    notes = TextField(blank=True, null=True)
 
     @property
     def home(self):
