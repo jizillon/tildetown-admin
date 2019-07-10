@@ -22,6 +22,7 @@ class TownieAdmin(admin.ModelAdmin):
     inlines = [PubkeyInline]
     list_display = ('username', 'reviewed', 'email')
     ordering = ('reviewed',)
+    readonly_fields = ('reasons', 'plans', 'socials')
     exclude = ('first_name', 'last_name', 'password', 'groups', 'user_permissions', 'last_login', 'is_staff', 'is_active', 'is_superuser')
     actions = (bulk_review,)
     search_fields = ('username', 'email', 'displayname')
