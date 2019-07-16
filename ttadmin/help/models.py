@@ -1,4 +1,4 @@
-from django.db.models import Model, TextField, EmailField, CharField, DateTimeField
+from django.db.models import Model, TextField, EmailField, CharField, DateTimeField, ForeignKey
 
 ISSUE_TYPE_CHOICES = (
     ('logging_in', 'help logging in'),
@@ -34,3 +34,10 @@ class Ticket(Model):
 
     def __str__(self):
         return '{} from {}'.format(self.issue_type, self.name)
+
+
+class Note(Model):
+    created = DateTimeField(auto_now_add=True)
+    body = TextField(blank=False, null=False)
+    author = ForeignKey('users.Townie')
+    ticket = ForeignKey(Ticket)
