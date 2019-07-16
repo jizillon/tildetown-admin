@@ -58,7 +58,6 @@ class Townie(User):
     )
     shell = CharField(max_length=50, default="/bin/bash")
     state = CharField(max_length=20, choices=STATE_CHOICES, default=UNREVIEWED)
-    reviewed = BooleanField(default=False)
     reasons = TextField(blank=True, null=False, default='')
     plans = TextField(blank=True, null=False, default='')
     socials = TextField(blank=True, null=False, default='')
