@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db.models import Model, TextField, EmailField, CharField, DateTimeField, ForeignKey
 
 ISSUE_TYPE_CHOICES = (
@@ -39,5 +40,8 @@ class Ticket(Model):
 class Note(Model):
     created = DateTimeField(auto_now_add=True)
     body = TextField(blank=False, null=False)
-    author = ForeignKey('users.Townie')
+    author = ForeignKey(User)
     ticket = ForeignKey(Ticket)
+
+    def __str__(self):
+        return "admin note"
