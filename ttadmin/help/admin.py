@@ -26,10 +26,10 @@ class NewNoteInline(admin.StackedInline):
 @admin.register(Ticket)
 class TicketAdmin(admin.ModelAdmin):
     inlines = [ImmutableNoteInline, NewNoteInline]
-    readonly_fields = ('submitted',)
-    list_display = ('submitted', 'issue_status', 'issue_type', 'name', 'email')
-    list_filter = ('issue_status', 'issue_type')
-    fields = ('submitted', 'name', 'email', 'issue_status', 'issue_type', 'issue_text')
+    readonly_fields = ('submitted', 'issue_type')
+    list_display = ('submitted', 'issue_status', 'assigned', 'issue_type', 'name', 'email',)
+    list_filter = ('issue_status', 'issue_type', 'assigned')
+    fields = ('submitted', 'name', 'email', 'assigned', 'issue_status', 'issue_type', 'issue_text')
 
     def save_related(self, request, form, formsets, change):
         # THIS IS EXTREMELY BOOTLEG AND MAY BREAK IF MORE INLINES ARE ADDED TO THIS ADMIN.

@@ -32,6 +32,7 @@ class Ticket(Model):
                              null=False,
                              max_length=50,
                              default=ISSUE_STATUS_CHOICES[0][0])
+    assigned = ForeignKey(User, blank=True, null=True, help_text="Assign this ticket to an admin or unassign it.")
 
     def __str__(self):
         return '{} from {}'.format(self.issue_type, self.name)
