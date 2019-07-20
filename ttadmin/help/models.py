@@ -46,3 +46,11 @@ class Note(Model):
 
     def __str__(self):
         return "admin note"
+
+
+class EmailTemplate(Model):
+    name = CharField(blank=False, null=False, max_length=50)
+    body = TextField(blank=False, null=False)
+
+    def __str__(self):
+        return f"'{self.name}' email template"
