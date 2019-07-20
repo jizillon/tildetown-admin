@@ -8,7 +8,7 @@ def set_state(apps, _):
     Townie = apps.get_model('users', 'Townie')
     for townie in Townie.objects.all():
         if townie.reviewed:
-            townie.state = Townie.ACCEPTED
+            townie.state = '2_accepted'
 
         townie.save()
 
