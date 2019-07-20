@@ -42,13 +42,37 @@ class Townie(User):
     class Meta:
         verbose_name = 'Townie'
         verbose_name_plural = 'Townies'
+
+    # the actual values here have a leading int for sorting :(
+    UNREVIEWED = '0_unreviewed'
+    TEMPBAN    = '1_tempban'
+    ACCEPTED   = '2_accepted'
+    REJECTED   = '3_rejected'
+    PERMABAN   = '4_permaban'
+    STATE_CHOICES = (
+            (REJECTED, 'Rejected'),
+            (ACCEPTED, 'Accepted'),
+            (UNREVIEWED, 'Unreviewed'),
+            (PERMABAN, 'Permanently Banned'),
+            (TEMPBAN, 'Temporarily Banned'),
+    )
     shell = CharField(max_length=50, default="/bin/bash")
-    reviewed = BooleanField(default=False)
+    state = CharField(max_length=20, choices=STATE_CHOICES, default=UNREVIEWED)
     reasons = TextField(blank=True, null=False, default='')
     plans = TextField(blank=True, null=False, default='')
     socials = TextField(blank=True, null=False, default='')
     referral = CharField(max_length=100, null=True, blank=True)
     displayname = CharField(max_length=100, blank=False, null=False)
+    notes = TextField(blank=True, null=True,
+          help_text='Use this field to share information about this user (reviewed or not) for other admins to see')
+
+    @property
+    def accepted(self):
+        return self.ACCEPTED == self.state
+
+    @property
+    def unreviewed(self):
+        return self.UNREVIEWED == self.state
 
     @property
     def home(self):
@@ -85,7 +109,7 @@ class Townie(User):
         """A VERY NOT IDEMPOTENT create function. Originally, I had ambitions
         to have this be idempotent and able to incrementally update a user as
         needed, but decided that was overkill for now."""
-        assert(self.reviewed)
+        assert(self.accepted)
         dot_ssh_path = '/home/{}/.ssh'.format(self.username)
 
         error = _guarded_run(['sudo',
@@ -207,7 +231,7 @@ def on_pubkey_post_save(sender, instance, **kwargs):
 
     townie = townie[0]
 
-    if townie.reviewed:
+    if townie.accepted:
         townie.write_authorized_keys()
 
 
@@ -219,12 +243,16 @@ def on_townie_pre_save(sender, instance, **kwargs):
 
     existing = Townie.objects.get(id=instance.id)
 
-    # See if we need to create this user on disk.
-    if not existing.reviewed and instance.reviewed is True:
+    # See if we need to create the user on disk.
+    if existing.unreviewed and instance.accepted:
         logger.info('Creating user {} on disk.'.format(instance.username))
         instance.create_on_disk()
         instance.send_welcome_email()
         instance.write_authorized_keys()
+        return
+    else:
+        # This user state transition is currently undefined. In the future, we can check for things
+        # like bans/unbans and then take the appropriate action.
         return
 
     # See if this user needs a rename on disk
@@ -251,15 +279,3 @@ def _guarded_run(cmd_args, **run_args):
                               issue_text='error while running {}: {}'.format(
                                   cmd_args, e))
         return e
-
-
-# things to consider:
-# * what happens when a user is marked as not reviewed?
-#  * does this signal user deletion? Or does literal Townie deletion signal
-#    "needs to be removed from disk"? I think it makes the most sense for the
-#    latter to imply full user deletion.
-#  * I honestly can't even think of a reason to revert a user to "not reviewed"
-#    and perhaps it's best to just not make that possible. for now, though, I
-#    think I can ignore it.
-# * what happens when a user needs to be banned?
-#  * the Townie should be deleted via post_delete signal

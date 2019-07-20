@@ -1,4 +1,5 @@
-from django.db.models import Model, TextField, EmailField, CharField, DateTimeField
+from django.contrib.auth.models import User
+from django.db.models import Model, TextField, EmailField, CharField, DateTimeField, ForeignKey
 
 ISSUE_TYPE_CHOICES = (
     ('logging_in', 'help logging in'),
@@ -31,6 +32,17 @@ class Ticket(Model):
                              null=False,
                              max_length=50,
                              default=ISSUE_STATUS_CHOICES[0][0])
+    assigned = ForeignKey(User, blank=True, null=True, help_text="Assign this ticket to an admin or unassign it.")
 
     def __str__(self):
         return '{} from {}'.format(self.issue_type, self.name)
+
+
+class Note(Model):
+    created = DateTimeField(auto_now_add=True)
+    body = TextField(blank=False, null=False)
+    author = ForeignKey(User)
+    ticket = ForeignKey(Ticket)
+
+    def __str__(self):
+        return "admin note"

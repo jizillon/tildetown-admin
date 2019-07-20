@@ -23,7 +23,7 @@ def validate_username(username):
         raise ValidationError('Username too short.')
     if not USERNAME_RE.match(username):
         raise ValidationError('Username must be all lowercase, start with a letter, and only use the _ special character')
-    duplicate = Townie.objects.filter(username=username).count()
+    duplicate = Townie.objects.filter(username=username).exclude(state=Townie.REJECTED).count()
     if duplicate > 0:
         raise ValidationError('Username already in use :(')
 
