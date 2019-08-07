@@ -1,0 +1,43 @@
+{% extends 'admin/change_form.html' %}
+
+{% block after_field_sets %}
+<h2>Send an email</h2>
+<table>
+  <tr>
+    <td>
+      <textarea id="send_email_body" rows="20" cols="60"></textarea>
+    </td>
+    <td>
+      <h3>Copy a template over?</h3>
+      <table>
+        <!-- loop over email_templates -->
+        {% for tmpl in email_templates %}
+        <tr>
+          <td>
+          {{ tmpl }}
+        {% endfor %}
+        <tr>
+          <td><button>copy</button></td>
+          <td>
+            <h4>lost key</h4>
+            <p>Hi!<br>to update your key, please respond to this message with your new pub key.</p>
+          </td>
+        </tr>
+        <tr>
+          <td><button>copy</button></td>
+          <td>
+            <h4>delete confirmation</h4>
+            <p>Hi,<br>this email is to confirm you would like your town account deleted. would you
+            like your public html files to remain accessible?</p>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <button>Send!</button>
+    </td>
+  </tr>
+</table>
+{% endblock %}
