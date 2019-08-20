@@ -12,10 +12,17 @@ from django.views.generic.edit import FormView
 from .forms import TownieForm
 from .models import Townie, Pubkey
 
+SIGNUPS_ENABLED = True
+
 class SignupView(FormView):
     form_class = TownieForm
     template_name = 'users/signup.html'
-    extra_context = {"signups_enabled": False}
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx['signups_enabled'] = SIGNUPS_ENABLED
+        return ctx
+
 
     @transaction.atomic
     def form_valid(self, form):
