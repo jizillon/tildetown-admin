@@ -11,7 +11,7 @@ class PubkeyInline(admin.TabularInline):
 
 def bulk_accept(madmin, req, qs):
     for townie in qs:
-        townie.state = 'accepted'
+        townie.state = Townie.ACCEPTED
         townie.save()
     post_users_to_social(qs)
 
@@ -19,7 +19,7 @@ bulk_accept.short_description = 'mark selected townies as accepted'
 
 def bulk_reject(madmin, req, qs):
     for townie in qs:
-        townie.state = 'rejected'
+        townie.state = Townie.REJECTED
         townie.save()
 
 bulk_reject.short_description = 'mark selected townies as rejected'
